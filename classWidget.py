@@ -7,4 +7,4 @@ class Widget():
         self.refreshRate = refreshRate
 
     def update(self):
-        print(f"updated widget {self.widgetName} at: {datetime.datetime.now()}")
+        logging.info(f"updated widget {self.widgetName} at: {datetime.datetime.now()}")
