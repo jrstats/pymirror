@@ -1,5 +1,3 @@
-# 
-
 # %%
 import selenium.webdriver
 import pandas as pd

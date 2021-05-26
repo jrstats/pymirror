@@ -32,3 +32,6 @@ current_weather["date"] = dt.datetime.fromtimestamp(current_weather["dt"])
 del current_weather["dt"]
 
 # %%
+daily_weather = [{k: x[k] for k in desired_fields} for x in weather["daily"]]
+
+# %%

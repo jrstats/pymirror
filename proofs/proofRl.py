@@ -18,4 +18,5 @@ events = [{
     "date": x.find("div", {"class": "divCell EventDetails Date Header"}).text.strip(),
     
 } for x in year_2021.find_all("div", {"class": "divRow"})]
+events
 # %%
