@@ -10,7 +10,7 @@ class Orchestrator():
 
     def getUpdateList(self):
         ## assume update all widgets
-        return self.widgetList
+        return [x for x in self.widgetList if x.getUpdateBoolean()]
 
     def updateList(self, updateList):
         logging.info(f"updating {len(updateList)} widgets")
@@ -22,7 +22,8 @@ class Orchestrator():
         o.updateList(self.widgetList)
 
         while True:
-            ## check for updates on every minute
+            ## Check for updates on every minute
+            ## Could go in config file
             if datetime.datetime.now().second == 0:
                 updateList = self.getUpdateList()
                 o.updateList(updateList)
@@ -34,8 +35,8 @@ class Orchestrator():
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format="%(asctime)s:%(levelname)s:%(message)s")
-    w1 = classWidget.Widget("widget1", 1)
-    w2 = classWidget.Widget("widget2", 2)
+    w1 = classWidget.Widget("widget1", "* * * * *", 1, {})
+    w2 = classWidget.Widget("widget2", "* * * * *", 1, {})
 
     o = Orchestrator([w1, w2])
     o.live()
