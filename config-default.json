@@ -1,0 +1,8 @@
+{
+    "orchestrator": {
+        "refreshPerMinute": 1
+    },
+
+
+    "widgetList": []
+}
