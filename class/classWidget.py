@@ -13,7 +13,7 @@ class Widget():
         :param priority:
         :param params:
     """
-    def __init__(self, widgetName: str, cronSyntax: str, priority: int, params: dict):
+    def __init__(self, widgetName: str, cronSyntax: str, priority: int, config: dict):
         try:
             if not croniter.croniter.is_valid(cronSyntax):
                 raise ValueError("cron syntax not valid")
@@ -23,7 +23,7 @@ class Widget():
         self.widgetName = widgetName
         self.cronSyntax = cronSyntax
         self.priority = priority
-        self.params = params
+        self.config = config
 
 
 
@@ -44,6 +44,10 @@ class Widget():
 
     def update(self):
         logging.info(f"updated widget {self.widgetName} at: {datetime.datetime.now()}")
+
+
+    def render(self, pane):
+        pass
 
 
 
