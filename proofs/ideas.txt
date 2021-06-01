@@ -1,8 +1,18 @@
+
+## Other smart mirror
 https://github.com/grantukas/SmartMirror/blob/master/quickstart.py
+
+## Tkinter
 https://www.youtube.com/watch?v=Pk9kRWcbJwE
 https://www.youtube.com/watch?v=4NusGY1iUkQ
 https://www.youtube.com/watch?v=2oS4w8yoGeQ
 
+### Tkinter HTML
+https://pypi.org/project/tkinterweb/
+https://github.com/Andereoo/TkinterWeb/blob/main/tkinterweb/docs/GEOMETRY.md
+https://www.youtube.com/watch?v=d6UitRCstiQ
+
 ## django mirror
 https://github.com/abhijitbangera/smartmirror
 https://www.youtube.com/watch?v=UmljXZIypDc
+
