@@ -5,33 +5,28 @@ from classWidget import Widget
 from classOrchestrator import Orchestrator
 
 
-class WidgetClock(Widget):
+class WidgetTemplate(Widget):
     def __init__(self, widgetName: str, cronSyntax: str, priority: int, config: dict) -> None:
         super().__init__(widgetName, cronSyntax, priority, config)
-        self.output: tuple = None
 
-        ## initialise widget pane
+        # initialise class
+        self.output = None
+
 
     def update(self) -> None:
-        now: datetime.datetime = datetime.datetime.now()
-        date: str = now.strftime(self.config["dateFormat"])
-        time: str = now.strftime(self.config["timeFormat"])
-        self.output: tuple = (time, date)
-        
+        # update output data
+
         logging.info(f"updated widget {self.widgetName} at: {datetime.datetime.now()}")
 
     def render(self) -> str:
+        # render html with output data
         html: str = f"""
-        <h1>{self.output[0]}</h1>
-        <h4>{self.output[1]}</h4>
+
         """
         return html
 
 if __name__ == "__main__":
-    config = {
-        "dateFormat": "%Y-%m-%d",
-        "timeFormat": "%H:%M:%S"
-    }
-    wc = WidgetClock("w1", "* * * * *", 1, config)
+    config = {}
+    wc = WidgetTemplate("w1", "* * * * *", 1, config)
     wc.update()
     print(wc.render())
