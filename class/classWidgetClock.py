@@ -20,13 +20,12 @@ class WidgetClock(Widget):
         
         logging.info(f"updated widget {self.widgetName} at: {datetime.datetime.now()}")
 
-    def render(self, pane):
-        time_label = tk.Label(pane, text=self.output[0], fg="white", bg="#000000")
-        date_label = tk.Label(pane, text=self.output[1], fg="white", bg="#000000")
-        time_label.grid(row=1,sticky="nw")
-        date_label.grid(row=2,sticky="nw")
-        
-        pane.grid_propagate(0)
+    def render(self):
+        html = f"""
+        <h1>{self.output[0]}</h1>
+        <h4>{self.output[1]}</h4>
+        """
+        return html
 
 if __name__ == "__main__":
     config = {
@@ -34,11 +33,5 @@ if __name__ == "__main__":
         "timeFormat": "%H:%M:%S"
     }
     wc = WidgetClock("w1", "* * * * *", 1, config)
-    root = tk.Tk()
-    root.geometry("200x200")
-    frame = tk.Frame(root, background="#000000", width=200, height=200)
-    frame.pack()
-
     wc.update()
-    wc.render(frame)
-    root.mainloop()
+    print(wc.render())
