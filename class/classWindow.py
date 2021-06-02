@@ -3,6 +3,8 @@ import screeninfo
 import tkinter as tk
 import tkinterweb as tkw
 
+from classWidgetClock import WidgetClock
+
 
 class Window():
     def __init__(self, widgetSize=200):
@@ -69,20 +71,37 @@ class Window():
         widgetFrame = paneDict[paneName][slotNumber]
 
         # placeholder
-        # html = widget.render() # widgetSize parameter?
-        html = f"""<h1>{widget}!</h1><hr>"""
+        html = widget.render() # widgetSize parameter?
         widgetFrame.load_html(html)
         widgetFrame.add_css(self.bodyCss)
 
+    def refresh(self):
+        self.root.update()
+        # self.rightWidgets[0].update() # doesn't work
 
 
 
 
 if __name__ == "__main__":
     w = Window()
-    w.addWidget("abc", "right", 0)
-    w.addWidget("def", "right", 1)
-    w.addWidget("james", "right", 2)
-    w.addWidget("eurovision", "left", 0)
-    w.addWidget("floorball", "left", 3)
-    w.root.mainloop()
+    print(f"There is space for {w.numberOfWidgets} widgets on each side panel")
+    
+    config = {
+        "dateFormat": "%Y-%m-%d",
+        "timeFormat": "%H:%M:%S"
+    }
+    wc = WidgetClock("w1", "* * * * *", 1, config)
+    
+    while True:
+        wc.update()
+
+        w.addWidget(wc, "right", 0)
+        w.addWidget(wc, "right", 1)
+        w.addWidget(wc, "right", 2)
+        w.addWidget(wc, "right", 3)
+        w.addWidget(wc, "left", 0)
+        w.addWidget(wc, "left", 1)
+        w.addWidget(wc, "left", 2)
+        w.addWidget(wc, "left", 3)
+
+        w.refresh()
