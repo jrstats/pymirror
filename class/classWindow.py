@@ -3,44 +3,45 @@ import screeninfo
 import tkinter as tk
 import tkinterweb as tkw
 
+import classWidget
 from classWidgetClock import WidgetClock
 
 
 class Window():
-    def __init__(self, widgetSize=200):
-        self.widgetSize = widgetSize
-        self.monitors = screeninfo.get_monitors()
-        m = self.monitors[0]
+    def __init__(self, widgetSize: int=200) -> None:
+        self.widgetSize: int = widgetSize
+        self.monitors: list[screeninfo.Monitor] = screeninfo.get_monitors()
+        m: screeninfo.Monitor = self.monitors[0]
         
 
         # root page
-        self.root = tk.Tk()
+        self.root: tk.Tk = tk.Tk()
         self.root.geometry(f"{m.width}x{m.height}+{m.x}+{m.y}")
         # 1440x900+0+0
 
         # add left and right pane
-        self.leftPane = tk.Frame(self.root, background="#000000", width=self.widgetSize, height=m.height)
-        self.rightPane = tk.Frame(self.root, background="#000000", width=self.widgetSize, height=m.height)
-        self.centrePane = tk.Frame(self.root, background="#ffffff", width=m.width-(2*self.widgetSize))
+        self.leftPane: tk.Frame = tk.Frame(self.root, background="#000000", width=self.widgetSize, height=m.height)
+        self.rightPane: tk.Frame = tk.Frame(self.root, background="#000000", width=self.widgetSize, height=m.height)
+        self.centrePane: tk.Frame = tk.Frame(self.root, background="#ffffff", width=m.width-(2*self.widgetSize))
         self.leftPane.pack(side="left", fill="x")
         self.rightPane.pack(side="right", fill="x")
         self.centrePane.pack(side="top", fill="both", expand=True)
 
         # calculate number of slots
-        widgetsTall = math.floor(m.height/self.widgetSize)
-        self.paddingY = (m.width - widgetsTall*self.widgetSize)/(2*(self.widgetSize + 1))
-        self.widgetWidth = self.widgetSize
-        self.widgetHeight = self.widgetSize + 2*self.paddingY
+        widgetsTall: int = math.floor(m.height/self.widgetSize)
+        self.paddingY: float = (m.width - widgetsTall*self.widgetSize)/(2*(self.widgetSize + 1))
+        self.widgetWidth: int = self.widgetSize
+        self.widgetHeight: float = self.widgetSize + 2*self.paddingY
         
         # split panes into widget slots
-        self.leftFrames = [tk.Frame(self.leftPane, width=self.widgetWidth, height=self.widgetHeight, bg="black") for i in range(widgetsTall)]
-        self.rightFrames = [tk.Frame(self.rightPane, width=self.widgetWidth, height=self.widgetHeight, bg="black") for i in range(widgetsTall)]
-        self.leftWidgets = [tkw.HtmlLabel(i, "<p>Empty widget</p><hr>", width=self.widgetWidth, height=self.widgetHeight) for i in self.leftFrames]
-        self.rightWidgets = [tkw.HtmlLabel(i, "<p>Empty widget</p><hr>", width=self.widgetWidth, height=self.widgetHeight) for i in self.rightFrames]
+        self.leftFrames: list[tkw.HtmlLabel] = [tk.Frame(self.leftPane, width=self.widgetWidth, height=self.widgetHeight, bg="black") for i in range(widgetsTall)]
+        self.rightFrames: list[tkw.HtmlLabel] = [tk.Frame(self.rightPane, width=self.widgetWidth, height=self.widgetHeight, bg="black") for i in range(widgetsTall)]
+        self.leftWidgets: list[tkw.HtmlLabel] = [tkw.HtmlLabel(i, "<p>Empty widget</p><hr>", width=self.widgetWidth, height=self.widgetHeight) for i in self.leftFrames]
+        self.rightWidgets: list[tkw.HtmlLabel] = [tkw.HtmlLabel(i, "<p>Empty widget</p><hr>", width=self.widgetWidth, height=self.widgetHeight) for i in self.rightFrames]
         
 
         # css template
-        self.bodyCss = """
+        self.bodyCss: str = """
         body {
             background-color: black;
             color: white
@@ -61,25 +62,22 @@ class Window():
             self.rightWidgets[i].pack()
 
         # meta
-        self.numberOfWidgets = len(self.leftWidgets)
+        self.numberOfWidgets: int = len(self.leftWidgets)
 
-    def addWidget(self, widget, paneName, slotNumber):
+    def addWidget(self, widget: classWidget.Widget, paneName: str, slotNumber: int) -> None:
         # pane selection
-        paneDict = {
+        paneDict: dict = {
             "left": self.leftWidgets,
             "right": self.rightWidgets}
-        widgetFrame = paneDict[paneName][slotNumber]
+        widgetFrame: tkw.HtmlLabel = paneDict[paneName][slotNumber]
 
         # placeholder
-        html = widget.render() # widgetSize parameter?
+        html: str = widget.render() # widgetSize parameter?
         widgetFrame.load_html(html)
         widgetFrame.add_css(self.bodyCss)
 
-    def refresh(self):
+    def refresh(self) -> None:
         self.root.update()
-        # self.rightWidgets[0].update() # doesn't work
-
-
 
 
 if __name__ == "__main__":

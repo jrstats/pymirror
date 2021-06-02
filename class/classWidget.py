@@ -13,24 +13,24 @@ class Widget():
         :param priority:
         :param params:
     """
-    def __init__(self, widgetName: str, cronSyntax: str, priority: int, config: dict):
+    def __init__(self, widgetName: str, cronSyntax: str, priority: int, config: dict) -> None:
         try:
             if not croniter.croniter.is_valid(cronSyntax):
                 raise ValueError("cron syntax not valid")
         except AttributeError:
             raise TypeError("cronSyntax not of type str.")
         
-        self.widgetName = widgetName
-        self.cronSyntax = cronSyntax
-        self.priority = priority
-        self.config = config
+        self.widgetName: str = widgetName
+        self.cronSyntax: str = cronSyntax
+        self.cron: croniter.croniter.coniter = croniter.croniter(self.cronSyntax)
+        self.priority: int = priority
+        self.config: dict = config
 
 
 
-    def getUpdateBoolean(self):
-        c = croniter.croniter(self.cronSyntax)
-        now = datetime.datetime.now()
-        c_prev = datetime.datetime.fromtimestamp(c.get_prev())
+    def getUpdateBoolean(self) -> bool:
+        now: datetime.datetime = datetime.datetime.now()
+        c_prev: datetime.datetime = datetime.datetime.fromtimestamp(self.cron.get_prev())
 
         logging.info(f"Most recent scheduled update for {self.widgetName} at {c_prev.strftime('%Y-%m-%d %H:%M:%S')}")
 
@@ -42,11 +42,11 @@ class Widget():
         else:
             return False
 
-    def update(self):
+    def update(self) -> None:
         logging.info(f"updated widget {self.widgetName} at: {datetime.datetime.now()}")
 
 
-    def render(self, pane):
+    def render(self) -> str:
         pass
 
 
