@@ -6,6 +6,7 @@ import tkinterweb as tkw
 import classWidget
 from classWidgetBins import WidgetBins
 from classWidgetClock import WidgetClock
+from classWidgetRss import WidgetRss
 
 
 class Window():
@@ -94,18 +95,30 @@ if __name__ == "__main__":
             "baseUrl": "https://www.ealing.gov.uk/site/custom_scripts/waste_collection/waste_collection.aspx",
             "postCode": "W5 2AR",
             "binsOfInterest": ["BLUE RECYCLING WHEELIE BIN", "FOOD BOX", "BLACK RUBBISH WHEELIE BIN"]
+        },
+        "rss": {
+            "baseUrl": "https://www.reddit.com/user/m-xames/m/uk_politics/search.rss?",
+            "searchTerms": {
+                "q": "is_self:0 NOT site:(500px.com OR abload.de OR deviantart.com OR deviantart.net OR fav.me OR fbcdn.net OR flickr.com OR forgifs.com OR giphy.com OR gfycat.com OR gifsoup.com OR gyazo.com OR imageshack.us OR imgclean.com OR imgur.com OR instagr.am OR instagram.com OR mediacru.sh OR media.tumblr.com OR min.us OR minus.com OR myimghost.com OR photobucket.com OR picsarus.com OR puu.sh OR i.redd.it OR staticflickr.com OR tinypic.com OR twitpic.com)",
+                "sort": "hot",
+                "restrict_sr":1,
+                "is_multi":1
+            },
+            "displayNumberOfItems": 3
         }
     }
     wc = WidgetClock("w1", "* * * * *", 1, config["clock"])
-    wb = WidgetBins("w2", "* * * * *", 1, config["bins"])
-    wb.update()
-    
+    # wb = WidgetBins("w2", "* * * * *", 1, config["bins"])
+    wr = WidgetRss("w3", "* * * * *", 1, config["rss"])
+    # wb.update()
+    wr.update()
+
     while True:
         wc.update()
         
 
         w.addWidget(wc, "right", 0)
-        w.addWidget(wb, "right", 1)
+        w.addWidget(wr, "right", 1)
         w.addWidget(wc, "right", 2)
         w.addWidget(wc, "right", 3)
         w.addWidget(wc, "left", 0)

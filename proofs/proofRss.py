@@ -17,3 +17,5 @@ for entry in UkPoliticsFeed.entries:
     print(entry["title"], "\n")
 
 # %%
+entry.keys()
+# %%
