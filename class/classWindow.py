@@ -27,13 +27,23 @@ class Window():
         # calculate number of slots
         widgetsTall = math.floor(m.height/self.widgetSize)
         self.paddingY = (m.width - widgetsTall*self.widgetSize)/(2*(self.widgetSize + 1))
+        self.widgetWidth = self.widgetSize
+        self.widgetHeight = self.widgetSize + 2*self.paddingY
         
-        # # split panes into widget slots
-        self.leftFrames = [tk.Frame(self.leftPane, width=self.widgetSize, height=self.widgetSize + 2*self.paddingY, bg="black") for i in range(widgetsTall)]
-        self.rightFrames = [tk.Frame(self.rightPane, width=self.widgetSize, height=self.widgetSize + 2*self.paddingY, bg="black") for i in range(widgetsTall)]
-        self.leftWidgets = [tkw.HtmlLabel(i, "<p>Empty widget</p>") for i in self.leftFrames]
-        self.rightWidgets = [tkw.HtmlLabel(i, "<p>Empty widget</p>") for i in self.rightFrames]
+        # split panes into widget slots
+        self.leftFrames = [tk.Frame(self.leftPane, width=self.widgetWidth, height=self.widgetHeight, bg="black") for i in range(widgetsTall)]
+        self.rightFrames = [tk.Frame(self.rightPane, width=self.widgetWidth, height=self.widgetHeight, bg="black") for i in range(widgetsTall)]
+        self.leftWidgets = [tkw.HtmlLabel(i, "<p>Empty widget</p><hr>", width=self.widgetWidth, height=self.widgetHeight) for i in self.leftFrames]
+        self.rightWidgets = [tkw.HtmlLabel(i, "<p>Empty widget</p><hr>", width=self.widgetWidth, height=self.widgetHeight) for i in self.rightFrames]
         
+
+        # css template
+        self.bodyCss = """
+        body {
+            background-color: black;
+            color: white
+        }
+        """
 
         # pack
         self.leftPane.pack_propagate(0)
@@ -43,6 +53,8 @@ class Window():
             self.rightFrames[i].pack()
             self.leftFrames[i].pack_propagate(0)
             self.rightFrames[i].pack_propagate(0)
+            self.leftWidgets[i].add_css(self.bodyCss)
+            self.rightWidgets[i].add_css(self.bodyCss)
             self.leftWidgets[i].pack()
             self.rightWidgets[i].pack()
 
@@ -58,8 +70,9 @@ class Window():
 
         # placeholder
         # html = widget.render() # widgetSize parameter?
-        html = f"<h1>{widget}!</h1>"
+        html = f"""<h1>{widget}!</h1><hr>"""
         widgetFrame.load_html(html)
+        widgetFrame.add_css(self.bodyCss)
 
 
 
