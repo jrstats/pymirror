@@ -13,13 +13,12 @@ class WidgetBins(Widget):
         super().__init__(widgetName, cronSyntax, priority, config)
 
         # initialise class
-        self.driver: selenium.webdriver.Chrome = selenium.webdriver.Chrome()
         self.output: pd.DataFrame = None
 
 
     def update(self) -> None:
         # update output data
-
+        self.driver: selenium.webdriver.Chrome = selenium.webdriver.Chrome()
         self.driver.get(self.config["baseUrl"])
         self.driver.find_element_by_id("txtLookupPostCode").send_keys(self.config["postCode"])
         self.driver.find_element_by_id("btnAddressLookup").click()
@@ -74,9 +73,16 @@ class WidgetBins(Widget):
         logging.info(f"updated widget {self.widgetName} at: {datetime.datetime.now()}")
 
     def render(self) -> str:
-        # render html with output data
+        # get dataframe
         html: str = self.output[0].to_html(index=False)
         html = html.replace("<th></th>", "")
+        
+        # # get colour box
+        # if self.output[1].lower() == "blue":
+        #     html += """\n<div style="height:10 width:100 color:blue;"></div>"""
+        # elif self.output[1].lower() == "black":
+        #     html += """<p>&#9633;</p>"""
+
         return html
 
 if __name__ == "__main__":
