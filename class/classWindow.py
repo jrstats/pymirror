@@ -4,6 +4,7 @@ import tkinter as tk
 import tkinterweb as tkw
 
 import classWidget
+from classWidgetBins import WidgetBins
 from classWidgetClock import WidgetClock
 
 
@@ -85,16 +86,26 @@ if __name__ == "__main__":
     print(f"There is space for {w.numberOfWidgets} widgets on each side panel")
     
     config = {
-        "dateFormat": "%Y-%m-%d",
-        "timeFormat": "%H:%M:%S"
+        "clock": {
+            "dateFormat": "%Y-%m-%d",
+            "timeFormat": "%H:%M:%S"
+        },
+        "bins": {
+            "baseUrl": "https://www.ealing.gov.uk/site/custom_scripts/waste_collection/waste_collection.aspx",
+            "postCode": "W5 2AR",
+            "binsOfInterest": ["BLUE RECYCLING WHEELIE BIN", "FOOD BOX", "BLACK RUBBISH WHEELIE BIN"]
+        }
     }
-    wc = WidgetClock("w1", "* * * * *", 1, config)
+    wc = WidgetClock("w1", "* * * * *", 1, config["clock"])
+    wb = WidgetBins("w2", "* * * * *", 1, config["bins"])
+    wb.update()
     
     while True:
         wc.update()
+        
 
         w.addWidget(wc, "right", 0)
-        w.addWidget(wc, "right", 1)
+        w.addWidget(wb, "right", 1)
         w.addWidget(wc, "right", 2)
         w.addWidget(wc, "right", 3)
         w.addWidget(wc, "left", 0)
