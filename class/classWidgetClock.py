@@ -2,15 +2,12 @@ import datetime
 import logging
 import tkinter as tk
 from classWidget import Widget
-from classOrchestrator import Orchestrator
 
 
 class WidgetClock(Widget):
-    def __init__(self, widgetName: str, cronSyntax: str, priority: int, config: dict) -> None:
-        super().__init__(widgetName, cronSyntax, priority, config)
+    def __init__(self, widgetName: str, cronSyntax: str, priority: int, pane: str, slotNumber: int, config: dict) -> None:
+        super().__init__(widgetName, cronSyntax, priority, pane, slotNumber, config)
         self.output: tuple = None
-
-        ## initialise widget pane
 
     def update(self) -> None:
         now: datetime.datetime = datetime.datetime.now()
@@ -21,6 +18,7 @@ class WidgetClock(Widget):
         logging.info(f"updated widget {self.widgetName} at: {datetime.datetime.now()}")
 
     def render(self) -> str:
+        logging.info(f"rendering {self.widgetName}")
         html: str = f"""
         <h1>{self.output[0]}</h1>
         <h4>{self.output[1]}</h4>

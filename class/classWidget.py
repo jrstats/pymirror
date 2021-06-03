@@ -11,9 +11,9 @@ class Widget():
         :param widgetName:
         :param cronSyntax: Minute, Hour, DayOfMonth, Month, DayOfWeek
         :param priority:
-        :param params:
+        :param config: 
     """
-    def __init__(self, widgetName: str, cronSyntax: str, priority: int, config: dict) -> None:
+    def __init__(self, widgetName: str, cronSyntax: str, priority: int, pane: str, slotNumber: int, config: dict) -> None:
         try:
             if not croniter.croniter.is_valid(cronSyntax):
                 raise ValueError("cron syntax not valid")
@@ -24,6 +24,8 @@ class Widget():
         self.cronSyntax: str = cronSyntax
         self.cron: croniter.croniter.coniter = croniter.croniter(self.cronSyntax)
         self.priority: int = priority
+        self.pane: str = pane
+        self.slotNumber: int = slotNumber
         self.config: dict = config
 
 
