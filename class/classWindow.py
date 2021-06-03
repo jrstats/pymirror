@@ -2,11 +2,12 @@ import math
 import screeninfo
 import tkinter as tk
 import tkinterweb as tkw
+import logging
 
-import classWidget
-from classWidgetBins import WidgetBins
-from classWidgetClock import WidgetClock
-from classWidgetRss import WidgetRss
+from classWidget import Widget
+# from classWidgetBins import WidgetBins
+# from classWidgetClock import WidgetClock
+# from classWidgetRss import WidgetRss
 
 
 class Window():
@@ -66,19 +67,21 @@ class Window():
         # meta
         self.numberOfWidgets: int = len(self.leftWidgets)
 
-    def addWidget(self, widget: classWidget.Widget, paneName: str, slotNumber: int) -> None:
+    def addWidget(self, widget: Widget) -> None:
         # pane selection
         paneDict: dict = {
             "left": self.leftWidgets,
             "right": self.rightWidgets}
-        widgetFrame: tkw.HtmlLabel = paneDict[paneName][slotNumber]
+        widgetFrame: tkw.HtmlLabel = paneDict[widget.pane][widget.slotNumber]
 
         # placeholder
+        widget.update()
         html: str = widget.render() # widgetSize parameter?
         widgetFrame.load_html(html)
         widgetFrame.add_css(self.bodyCss)
 
     def refresh(self) -> None:
+        logging.info("refreshing screen")
         self.root.update()
 
 
