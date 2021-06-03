@@ -4,12 +4,13 @@ import numpy as np
 import pandas as pd
 import selenium.webdriver
 import tkinter as tk
-from classWidget import Widget
-from classOrchestrator import Orchestrator
+
+from typing import List, Dict, Any
+from .classWidget import Widget
 
 
 class WidgetBins(Widget):
-    def __init__(self, widgetName: str, cronSyntax: str, priority: int, pane: str, slotNumber: int, config: dict) -> None:
+    def __init__(self, widgetName: str, cronSyntax: str, priority: int, pane: str, slotNumber: int, config: Dict[str, Any]) -> None:
         super().__init__(widgetName, cronSyntax, priority, pane, slotNumber, config)
 
         # initialise class
@@ -30,7 +31,7 @@ class WidgetBins(Widget):
         table = self.driver.find_element_by_id("RetrieveAllDataGrid")
         rows = table.find_elements_by_tag_name("tr")
 
-        data: list[list[str]] = [[x.text for x in y.find_elements_by_tag_name("td")] for y in rows]
+        data: List[List[str]] = [[x.text for x in y.find_elements_by_tag_name("td")] for y in rows]
         self.driver.quit()
 
         df: pd.DataFrame = pd.DataFrame(data)
@@ -84,13 +85,3 @@ class WidgetBins(Widget):
         #     html += """<p>&#9633;</p>"""
 
         return html
-
-if __name__ == "__main__":
-    config = {
-        "baseUrl": "https://www.ealing.gov.uk/site/custom_scripts/waste_collection/waste_collection.aspx",
-        "postCode": "W5 2AR",
-        "binsOfInterest": ["BLUE RECYCLING WHEELIE BIN", "FOOD BOX", "BLACK RUBBISH WHEELIE BIN"]
-    }
-    wc = WidgetBins("w1", "* * * * *", 1, config)
-    wc.update()
-    print(wc.render())

@@ -2,6 +2,7 @@ import datetime
 import croniter
 import logging
 
+from typing import Dict, Union
 
 class Widget():
     """
@@ -13,7 +14,7 @@ class Widget():
         :param priority:
         :param config: 
     """
-    def __init__(self, widgetName: str, cronSyntax: str, priority: int, pane: str, slotNumber: int, config: dict) -> None:
+    def __init__(self, widgetName: str, cronSyntax: str, priority: int, pane: str, slotNumber: int, config: Dict[str, Union[str, Dict]]) -> None:
         try:
             if not croniter.croniter.is_valid(cronSyntax):
                 raise ValueError("cron syntax not valid")
@@ -22,7 +23,7 @@ class Widget():
         
         self.widgetName: str = widgetName
         self.cronSyntax: str = cronSyntax
-        self.cron: croniter.croniter.coniter = croniter.croniter(self.cronSyntax)
+        self.cron: croniter.croniter = croniter.croniter(self.cronSyntax)
         self.priority: int = priority
         self.pane: str = pane
         self.slotNumber: int = slotNumber
@@ -55,7 +56,7 @@ class Widget():
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format="%(asctime)s:%(levelname)s:%(message)s")
-    w1 = Widget("w1", "abc", 1, {})
+    w1 = Widget("w1", "abc", 1, "left", 0, {})
     w1.getUpdateBoolean()
 
 

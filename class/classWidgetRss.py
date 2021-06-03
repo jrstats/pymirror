@@ -2,24 +2,22 @@ import datetime
 import feedparser
 import logging
 import tkinter as tk
-import urllib
-from classWidget import Widget
-from classOrchestrator import Orchestrator
-
+import urllib.parse
+from typing import List, Dict, Any
+from .classWidget import Widget
 
 class WidgetRss(Widget):
-    def __init__(self, widgetName: str, cronSyntax: str, priority: int, pane: str, slotNumber: int, config: dict) -> None:
+    def __init__(self, widgetName: str, cronSyntax: str, priority: int, pane: str, slotNumber: int, config: Dict[str, Any]) -> None:
         super().__init__(widgetName, cronSyntax, priority, pane, slotNumber, config)
 
         # initialise class
-        self.output = None
-        self.query = self.config["baseUrl"] + urllib.parse.urlencode(config["searchTerms"])
+        self.query: str = self.config["baseUrl"] + urllib.parse.urlencode(config["searchTerms"])
 
 
     def update(self) -> None:
         # update output data
         feed = feedparser.parse(self.query)
-        self.output: list = feed.entries
+        self.output: List = feed.entries
 
         logging.info(f"updated widget {self.widgetName} at: {datetime.datetime.now()}")
 
@@ -43,6 +41,6 @@ if __name__ == "__main__":
         "displayNumberOfItems": 3
     }
 
-    wc = WidgetRss("w1", "* * * * *", 1, config)
+    wc = WidgetRss("w1", "* * * * *", 1, "left", 0, config)
     wc.update()
     print(wc.render())
