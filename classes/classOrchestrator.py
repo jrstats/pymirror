@@ -11,42 +11,39 @@ class Orchestrator():
         self.widgetList: List[Widget] = widgetList
         self.window: Window = window
 
-        # add widgets to the window
-        for w in widgetList:
-            self.window.addWidget(w)
 
 
-    def getUpdateList(self) -> List[Widget]:
+
+    def getRefreshList(self) -> List[Widget]:
         ## assume update all widgets
         return [x for x in self.widgetList if x.getUpdateBoolean()]
 
-    def updateList(self, updateList: List[Widget]) -> None:
-        logging.info(f"updating {len(updateList)} widgets")
+    def refreshList(self, updateList: List[Widget]) -> None:
+        logging.info(f"refreshing {len(updateList)} widgets")
         for w in updateList:
+            logging.info(f"refreshing {w.widgetName}")
             w.update()
+            w.generateHtml()
+            self.window.loadWidget(w)
         logging.info(f"successfully updated {len(updateList)} widgets")
-
-    def renderList(self, updateList: List[Widget]) -> None:
-        for w in updateList:
-            logging.info(f"rendering {w.widgetName}")
-            w.render()
-        logging.info("finished rendering\n\n")
 
     def live(self) -> None:
         # initial load of all widgets
-        self.updateList(self.widgetList)
+        self.refreshList(self.widgetList)
+        for w in self.widgetList:
+            self.window.loadWidget(w)
+
 
         while True:
             ## Check for updates on every minute
             ## Could go in config file
             if datetime.datetime.now().microsecond == 0:
-                # updateList: List[Widget] = self.getUpdateList()
-                updateList = self.widgetList
-                self.updateList(updateList)
-                self.renderList(updateList)
+                # updateList: List[Widget] = self.getRefreshList()
+                updateList: List[Widget] = self.widgetList
 
                 # render screen
-                self.window.refresh() # NOT WORKING FOR SOME REASON
+                self.refreshList(updateList)
+                self.window.refresh()
 
                 # ## stop from re-running immediately
                 if datetime.datetime.now().microsecond == 0:

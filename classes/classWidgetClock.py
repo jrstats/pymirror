@@ -18,13 +18,13 @@ class WidgetClock(Widget):
         
         logging.info(f"updated widget {self.widgetName} at: {datetime.datetime.now()}")
 
-    def render(self) -> str:
+    def generateHtml(self) -> str:
         logging.info(f"rendering {self.widgetName}")
         html: str = f"""
         <h1>{self.output[0]}</h1>
         <h4>{self.output[1]}</h4>
         """
-        return html
+        self.html: str = html
 
 if __name__ == "__main__":
     config = {

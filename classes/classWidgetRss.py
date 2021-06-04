@@ -21,13 +21,14 @@ class WidgetRss(Widget):
 
         logging.info(f"updated widget {self.widgetName} at: {datetime.datetime.now()}")
 
-    def render(self) -> str:
+    def generateHtml(self) -> str:
         # render html with output data
         htmlList: list = [x["title"] for x in self.output][:self.config["displayNumberOfItems"]]
         html = "<ul><li>"
         html += "</li>\n<li>".join(htmlList)
         html += "</li></ul>"
-        return html
+        
+        self.html: str = html
 
 if __name__ == "__main__":
     config = {

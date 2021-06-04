@@ -73,15 +73,15 @@ class WidgetBins(Widget):
         self.output = (df_summary, bin_colour)
         logging.info(f"updated widget {self.widgetName} at: {datetime.datetime.now()}")
 
-    def render(self) -> str:
+    def generateHtml(self) -> None:
         # get dataframe
         html: str = self.output[0].to_html(index=False)
         html = html.replace("<th></th>", "")
-        
+
         # # get colour box
         # if self.output[1].lower() == "blue":
         #     html += """\n<div style="height:10 width:100 color:blue;"></div>"""
         # elif self.output[1].lower() == "black":
         #     html += """<p>&#9633;</p>"""
 
-        return html
+        self.html: str = html

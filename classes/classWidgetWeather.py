@@ -18,12 +18,12 @@ class WidgetWeather(Widget):
 
         logging.info(f"updated widget {self.widgetName} at: {datetime.datetime.now()}")
 
-    def render(self) -> str:
+    def generateHtml(self) -> str:
         # render html with output data
         html: str = f"""
 
         """
-        return html
+        self.html: str = html
 
 if __name__ == "__main__":
     config = {}

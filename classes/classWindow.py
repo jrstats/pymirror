@@ -68,17 +68,16 @@ class Window():
         # meta
         self.numberOfWidgets: int = len(self.leftWidgets)
 
-    def addWidget(self, widget: Widget) -> None:
+    def loadWidget(self, widget: Widget) -> None:
         # pane selection
         paneDict: dict = {
             "left": self.leftWidgets,
             "right": self.rightWidgets}
         widgetFrame: tkw.HtmlLabel = paneDict[widget.pane][widget.slotNumber]
 
-        # placeholder
-        widget.update()
-        html: str = widget.render() # widgetSize parameter?
-        widgetFrame.load_html(html)
+        # widget.update()
+        # widget.generateHtml()
+        widgetFrame.load_html(widget.html)
         widgetFrame.add_css(self.bodyCss)
 
     def refresh(self) -> None:

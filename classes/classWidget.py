@@ -49,8 +49,8 @@ class Widget():
         logging.info(f"updated widget {self.widgetName} at: {datetime.datetime.now()}")
 
 
-    def render(self) -> str:
-        pass
+    def generateHtml(self) -> None:
+        self.html: str = ""
 
 
 
