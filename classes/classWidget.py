@@ -33,13 +33,13 @@ class Widget():
 
     def getUpdateBoolean(self) -> bool:
         now: datetime.datetime = datetime.datetime.now()
-        c_prev: datetime.datetime = datetime.datetime.fromtimestamp(self.cron.get_prev())
+        prevCron: datetime.datetime = datetime.datetime.fromtimestamp(self.cron.get_prev())
 
-        logging.info(f"Most recent scheduled update for {self.widgetName} at {c_prev.strftime('%Y-%m-%d %H:%M:%S')}")
+        logging.info(f"Most recent scheduled update for {self.widgetName} at {prevCron.strftime('%Y-%m-%d %H:%M:%S')}")
 
         ## Assuming orchestrator refreshes every minute
         ## Could go in config file
-        if now - c_prev < datetime.timedelta(minutes=1):
+        if now - prevCron < datetime.timedelta(minutes=1):
             logging.info(f"Updating {self.widgetName}...")
             return True
         else:
@@ -56,8 +56,13 @@ class Widget():
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format="%(asctime)s:%(levelname)s:%(message)s")
-    w1 = Widget("w1", "abc", 1, "left", 0, {})
-    w1.getUpdateBoolean()
+    cronSyntax = "* * * * * *"
+    cronSyntax1 = "0 * * * * *"
+    cron: croniter.croniter = croniter.croniter(cronSyntax, datetime.datetime.now())
+    cron1: croniter.croniter = croniter.croniter(cronSyntax1, datetime.datetime.now())
 
+
+    print(dir(cron.all_prev()), "\n")
+    print(cron1.all_prev())
 
 

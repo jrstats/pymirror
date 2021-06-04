@@ -38,8 +38,8 @@ class Orchestrator():
             ## Check for updates on every minute
             ## Could go in config file
             if datetime.datetime.now().microsecond == 0:
-                # updateList: List[Widget] = self.getRefreshList()
-                updateList: List[Widget] = self.widgetList
+                # updateList: List[Widget] = self.widgetList
+                updateList: List[Widget] = self.getRefreshList()
 
                 # render screen
                 self.refreshList(updateList)
@@ -51,3 +51,5 @@ class Orchestrator():
 
 
 
+if __name__ == "__main__":
+    pass
