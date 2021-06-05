@@ -18,19 +18,10 @@ class WidgetClock(Widget):
         
         logging.info(f"updated widget {self.widgetName} at: {datetime.datetime.now()}")
 
-    def generateHtml(self) -> str:
+    def generateHtml(self) -> None:
         logging.info(f"rendering {self.widgetName}")
         html: str = f"""
         <h1>{self.output[0]}</h1>
         <h4>{self.output[1]}</h4>
         """
         self.html: str = html
-
-if __name__ == "__main__":
-    config = {
-        "dateFormat": "%Y-%m-%d",
-        "timeFormat": "%H:%M:%S"
-    }
-    wc = WidgetClock("w1", "* * * * *", 1, "left", 0, config)
-    wc.update()
-    print(wc.render())

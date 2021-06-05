@@ -47,17 +47,3 @@ class Widget():
     def generateHtml(self) -> None:
         self.html: str = ""
 
-
-
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format="%(asctime)s:%(levelname)s:%(message)s")
-    cronSyntax = "* * * * * *"
-    cronSyntax1 = "0 * * * * *"
-    cron: croniter.croniter = croniter.croniter(cronSyntax, datetime.datetime.now())
-    cron1: croniter.croniter = croniter.croniter(cronSyntax1, datetime.datetime.now())
-
-
-    print(dir(cron.all_prev()), "\n")
-    print(cron1.all_prev())
-
-
