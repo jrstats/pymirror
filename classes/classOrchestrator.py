@@ -2,16 +2,23 @@ import datetime
 import logging
 import time
 
-from typing import List
+from typing import Dict, List, Any
 from .classWidget import Widget
 from .classWindow import Window
 
 class Orchestrator():
-    def __init__(self, widgetList: List[Widget], window: Window) -> None:
+    def __init__(self, widgetList: List[Widget], window: Window, config: Dict[str, Any]) -> None:
         self.widgetList: List[Widget] = widgetList
         self.window: Window = window
+        self.config: Dict[str, Any] = config
 
 
+    def checkRefresh(self) -> bool:
+        refreshDict = {
+            "second": datetime.datetime.now().microsecond == 0,
+            "minute": datetime.datetime.now().second == 0,
+        }
+        return refreshDict[self.config["refresh"]]
 
 
     def getRefreshList(self) -> List[Widget]:
@@ -37,7 +44,7 @@ class Orchestrator():
         while True:
             ## Check for updates on every minute
             ## Could go in config file
-            if datetime.datetime.now().microsecond == 0:
+            if self.checkRefresh():
                 # updateList: List[Widget] = self.widgetList
                 updateList: List[Widget] = self.getRefreshList()
 
@@ -46,8 +53,8 @@ class Orchestrator():
                 self.window.refresh()
 
                 # ## stop from re-running immediately
-                if datetime.datetime.now().microsecond == 0:
-                    time.sleep(1)
+                while self.checkRefresh():
+                    time.sleep(0.1)
 
 
 

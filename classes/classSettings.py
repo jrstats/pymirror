@@ -2,14 +2,19 @@ from .keys import weatherKey, postCode
 
 
 class Settings():
+    ORCHESTRATOR = {
+        "refresh": "second" # ["second", "minute"]
+    }
+    
     WEATHER = {
-        "api_key": weatherKey,
-        "base_url": "https://api.openweathermap.org/data/2.5/onecall?",
+        "apiKey": weatherKey,
+        "baseUrl": "https://api.openweathermap.org/data/2.5/onecall?",
         "lat": "51.5149",
         "lon": "0.3019",
         "exclude": "minutely,hourly",
         "units": "metric",
-        "desired_fields": ["dt", "feels_like", "weather"]
+        "desiredFields": ["dt", "feels_like", "weather"],
+        "imgUrl": "http://openweathermap.org/img/w/{imgCode}.png"
     }
 
     CLOCK = {
