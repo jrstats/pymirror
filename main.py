@@ -1,8 +1,7 @@
 import logging
-from classes.classWidgetClock import WidgetClock
-from classes.classWidgetRss import WidgetRss
-from classes.classWindow import Window
-from classes.classOrchestrator import Orchestrator
+
+from classes import Orchestrator, Window
+from classes import WidgetClock, WidgetBins, WidgetRss
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format="%(asctime)s:%(levelname)s:%(message)s")
@@ -36,7 +35,15 @@ if __name__ == "__main__":
         config=configRss,
         pane="right",
         slotNumber=0)
+    wb = WidgetBins(
+        widgetName="bins",
+        cronSyntax="0 0 * * * * *",
+        priority=1,
+        config=configBins,
+        pane="right",
+        slotNumber=1
+    )
     window = Window()
 
-    o = Orchestrator([wc, wr], window)
+    o = Orchestrator([wc, wr, wb], window)
     o.live()

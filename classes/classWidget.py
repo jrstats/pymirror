@@ -22,6 +22,7 @@ class Widget():
         self.slotNumber: int = slotNumber
         self.config: dict = config
 
+        # https://github.com/josiahcarlson/parse-crontab
         self.cron: CronTab = CronTab(self.cronSyntax)
         self.lastChecked = datetime.datetime.now()
 
