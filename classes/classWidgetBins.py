@@ -2,9 +2,9 @@ import datetime
 import logging
 import numpy as np
 import pandas as pd
-import selenium.webdriver
 import tkinter as tk
 
+from selenium import webdriver
 from typing import List, Dict, Any
 from .classWidget import Widget
 
@@ -19,7 +19,9 @@ class WidgetBins(Widget):
 
     def update(self) -> None:
         # update output data
-        self.driver: selenium.webdriver.Chrome = selenium.webdriver.Chrome()
+        chrome_options: webdriver.ChromeOptions = webdriver.ChromeOptions()
+        chrome_options.headless = True
+        self.driver: webdriver.Chrome = webdriver.Chrome(chrome_options=chrome_options)
         self.driver.get(self.config["baseUrl"])
         self.driver.find_element_by_id("txtLookupPostCode").send_keys(self.config["postCode"])
         self.driver.find_element_by_id("btnAddressLookup").click()
@@ -85,3 +87,5 @@ class WidgetBins(Widget):
         #     html += """<p>&#9633;</p>"""
 
         self.html: str = html
+
+
