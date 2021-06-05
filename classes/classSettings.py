@@ -1,4 +1,4 @@
-from .keys import weatherKey
+from .keys import weatherKey, postCode
 
 
 class Settings():
@@ -19,7 +19,7 @@ class Settings():
 
     BINS = {
         "baseUrl": "https://www.ealing.gov.uk/site/custom_scripts/waste_collection/waste_collection.aspx",
-        "postCode": "W5 2AR",
+        "postCode": postCode,
         "binsOfInterest": ["BLUE RECYCLING WHEELIE BIN", "FOOD BOX", "BLACK RUBBISH WHEELIE BIN"]
     }
 
