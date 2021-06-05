@@ -16,7 +16,7 @@ class Orchestrator():
 
     def getRefreshList(self) -> List[Widget]:
         ## assume update all widgets
-        return [x for x in self.widgetList if x.getUpdateBoolean()]
+        return [x for x in self.widgetList if x.getRefreshBoolean()]
 
     def refreshList(self, updateList: List[Widget]) -> None:
         logging.info(f"refreshing {len(updateList)} widgets")

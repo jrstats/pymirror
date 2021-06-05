@@ -24,14 +24,14 @@ if __name__ == "__main__":
 
     wc = WidgetClock(
         widgetName="clock", 
-        cronSyntax="* * * * * *", 
+        cronSyntax="* * * * * * *", 
         priority=1, 
         config=configClock,
         pane="left",
         slotNumber=0)
     wr = WidgetRss(
         widgetName="rssFeed", 
-        cronSyntax="0 * * * * *", 
+        cronSyntax="0 * * * * * *", 
         priority=1, 
         config=configRss,
         pane="right",
