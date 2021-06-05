@@ -1,5 +1,4 @@
 import datetime
-import logging
 import numpy as np
 import pandas as pd
 import tkinter as tk
@@ -7,7 +6,10 @@ import tkinter as tk
 from selenium import webdriver
 from typing import List, Dict, Any
 from .classWidget import Widget
+from .classLogger import Logger
+from .classSettings import Settings
 
+logger = Logger(__name__, Settings.LOGGER)
 
 class WidgetBins(Widget):
     def __init__(self, widgetName: str, cronSyntax: str, priority: int, pane: str, slotNumber: int, config: Dict[str, Any]) -> None:
@@ -73,7 +75,7 @@ class WidgetBins(Widget):
         bin_colour = df_summary.loc[lambda df: df["bin"] != "FOOD BOX"].iloc[0]["bin"].split(" ")[0]
 
         self.output = (df_summary, bin_colour)
-        logging.info(f"updated widget {self.widgetName} at: {datetime.datetime.now()}")
+        logger.info(f"updated widget {self.widgetName} at: {datetime.datetime.now()}")
 
     def generateHtml(self) -> None:
         # get dataframe

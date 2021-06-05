@@ -1,10 +1,7 @@
-import logging
-
-from classes import Orchestrator, Settings, Window
+from classes import Orchestrator, Settings, Window, Logger
 from classes import WidgetClock, WidgetBins, WidgetRss, WidgetWeather
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format="%(asctime)s:%(levelname)s:%(message)s")
     wc = WidgetClock(
         widgetName="clock", 
         cronSyntax="* * * * * * *", 

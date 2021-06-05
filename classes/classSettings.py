@@ -5,7 +5,13 @@ class Settings():
     ORCHESTRATOR = {
         "refresh": "second" # ["second", "minute"]
     }
-    
+
+    LOGGER = {
+        "level": "INFO",
+        "format": "%(asctime)s - %(levelname)s - %(name)s - %(message)s",
+        "filename": "./logs/main.log"
+    }
+
     WEATHER = {
         "apiKey": weatherKey,
         "baseUrl": "https://api.openweathermap.org/data/2.5/onecall?",

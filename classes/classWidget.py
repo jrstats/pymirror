@@ -1,8 +1,11 @@
 import datetime
-import logging
 
 from crontab import CronTab
 from typing import Dict, Union
+from .classLogger import Logger
+from .classSettings import Settings
+
+logger = Logger(__name__, Settings.LOGGER)
 
 class Widget():
     """
@@ -29,7 +32,7 @@ class Widget():
 
     def getRefreshBoolean(self) -> bool:
         now: datetime.datetime = datetime.datetime.now()
-        # logging.info(f"Most recent scheduled update for {self.widgetName} at {prevCron.strftime('%Y-%m-%d %H:%M:%S')}")
+        # logger.info(f"Most recent scheduled update for {self.widgetName} at {prevCron.strftime('%Y-%m-%d %H:%M:%S')}")
 
         ## if cron has occured between lastChecked and now
         if now.timestamp() + self.cron.previous(default_utc=False) > self.lastChecked.timestamp():
@@ -41,7 +44,7 @@ class Widget():
         return output
 
     def update(self) -> None:
-        logging.info(f"updated widget {self.widgetName} at: {datetime.datetime.now()}")
+        logger.info(f"updated widget {self.widgetName} at: {datetime.datetime.now()}")
 
 
     def generateHtml(self) -> None:

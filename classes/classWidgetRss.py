@@ -1,10 +1,13 @@
 import datetime
 import feedparser
-import logging
 import tkinter as tk
 import urllib.parse
 from typing import List, Dict, Any
 from .classWidget import Widget
+from .classLogger import Logger
+from .classSettings import Settings
+
+logger = Logger(__name__, Settings.LOGGER)
 
 class WidgetRss(Widget):
     def __init__(self, widgetName: str, cronSyntax: str, priority: int, pane: str, slotNumber: int, config: Dict[str, Any]) -> None:
@@ -19,7 +22,7 @@ class WidgetRss(Widget):
         feed = feedparser.parse(self.query)
         self.output: List = feed.entries
 
-        logging.info(f"updated widget {self.widgetName} at: {datetime.datetime.now()}")
+        logger.info(f"updated widget {self.widgetName} at: {datetime.datetime.now()}")
 
     def generateHtml(self) -> None:
         # render html with output data

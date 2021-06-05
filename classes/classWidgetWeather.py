@@ -1,13 +1,14 @@
 import datetime
 import json
-import logging
 import requests
 import tkinter as tk
 import urllib
 from typing import List, Dict, Any
 from .classWidget import Widget
+from .classLogger import Logger
+from .classSettings import Settings
 
-
+logger = Logger(__name__, Settings.LOGGER)
 class WidgetWeather(Widget):
     def __init__(self, widgetName: str, cronSyntax: str, priority: int, pane: str, slotNumber: int, config: Dict[str, Any]) -> None:
         super().__init__(widgetName, cronSyntax, priority, pane, slotNumber, config)
@@ -35,7 +36,7 @@ class WidgetWeather(Widget):
         currentWeather: Dict[str, Any] = {k: weather["current"][k] for k in self.config["desiredFields"]}
 
         self.output = currentWeather
-        logging.info(f"updated widget {self.widgetName} at: {datetime.datetime.now()}")
+        logger.info(f"updated widget {self.widgetName} at: {datetime.datetime.now()}")
 
 
     def generateHtml(self) -> None:

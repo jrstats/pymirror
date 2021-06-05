@@ -1,11 +1,13 @@
 import datetime
-import logging
 import time
 
 from typing import Dict, List, Any
+from .classSettings import Settings
+from .classLogger import Logger
 from .classWidget import Widget
 from .classWindow import Window
 
+logger = Logger(__name__, Settings.LOGGER)
 class Orchestrator():
     def __init__(self, widgetList: List[Widget], window: Window, config: Dict[str, Any]) -> None:
         self.widgetList: List[Widget] = widgetList
@@ -26,13 +28,13 @@ class Orchestrator():
         return [x for x in self.widgetList if x.getRefreshBoolean()]
 
     def refreshList(self, updateList: List[Widget]) -> None:
-        logging.info(f"refreshing {len(updateList)} widgets")
+        logger.info(f"refreshing {len(updateList)} widgets")
         for w in updateList:
-            logging.info(f"refreshing {w.widgetName}")
+            logger.info(f"refreshing {w.widgetName}")
             w.update()
             w.generateHtml()
             self.window.loadWidget(w)
-        logging.info(f"successfully updated {len(updateList)} widgets")
+        logger.info(f"successfully updated {len(updateList)} widgets")
 
     def live(self) -> None:
         # initial load of all widgets

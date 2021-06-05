@@ -2,15 +2,16 @@ import math
 import screeninfo
 import tkinter as tk
 import tkinterweb as tkw
-import logging
 
 from typing import List
 from .classWidget import Widget
 from .classWidgetBins import WidgetBins
 from .classWidgetClock import WidgetClock
 from .classWidgetRss import WidgetRss
+from .classLogger import Logger
+from .classSettings import Settings
 
-
+logger = Logger(__name__, Settings.LOGGER)
 class Window():
     def __init__(self, widgetSize: int=200) -> None:
         self.widgetSize: int = widgetSize
@@ -81,5 +82,5 @@ class Window():
         widgetFrame.add_css(self.bodyCss)
 
     def refresh(self) -> None:
-        logging.info("refreshing screen")
+        logger.info("refreshing screen")
         self.root.update()

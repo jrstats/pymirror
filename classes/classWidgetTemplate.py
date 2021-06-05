@@ -1,10 +1,11 @@
 import datetime
-import logging
 import tkinter as tk
 from typing import Dict, Any
 from .classWidget import Widget
+from .classLogger import Logger
+from .classSettings import Settings
 
-
+logger = Logger(__name__, Settings.LOGGER)
 class WidgetTemplate(Widget):
     def __init__(self, widgetName: str, cronSyntax: str, priority: int, pane: str, slotNumber: int, config: Dict[str, Any]) -> None:
         super().__init__(widgetName, cronSyntax, priority, pane, slotNumber, config)
@@ -16,7 +17,7 @@ class WidgetTemplate(Widget):
     def update(self) -> None:
         # update output data
 
-        logging.info(f"updated widget {self.widgetName} at: {datetime.datetime.now()}")
+        logger.info(f"updated widget {self.widgetName} at: {datetime.datetime.now()}")
 
     def generateHtml(self) -> str:
         # render html with output data
