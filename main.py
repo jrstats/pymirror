@@ -1,7 +1,7 @@
 import logging
 
 from classes import Orchestrator, Settings, Window
-from classes import WidgetClock, WidgetBins, WidgetRss
+from classes import WidgetClock, WidgetBins, WidgetRss, WidgetWeather
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format="%(asctime)s:%(levelname)s:%(message)s")
@@ -27,7 +27,14 @@ if __name__ == "__main__":
     #     pane="right",
     #     slotNumber=1
     # )
+    ww = WidgetWeather(
+        widgetName="weather",
+        cronSyntax="0 * * * * * *",
+        priority=1,
+        config=Settings.WEATHER,
+        pane="right",
+        slotNumber=1)
     window = Window()
 
-    o = Orchestrator([wc, wr], window)
+    o = Orchestrator([wc, wr, ww], window, Settings.ORCHESTRATOR)
     o.live()
