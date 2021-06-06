@@ -2,17 +2,20 @@ from classes import Orchestrator, Settings, Window, Logger
 from classes import WidgetClock, WidgetBins, WidgetRss, WidgetWeather
 
 if __name__ == "__main__":
+    logger = Logger(__name__, Settings.LOGGER)
+    logger.info("starting mirror")
     wc = WidgetClock(
-        widgetName="clock", 
-        cronSyntax="* * * * * * *", 
-        priority=1, 
+        widgetName="clock",
+        cronSyntax="* * * * * * *",
+        priority=1,
         config=Settings.CLOCK,
         pane="left",
         slotNumber=0)
     wr = WidgetRss(
-        widgetName="rssFeed", 
-        cronSyntax="0 * * * * * *", 
-        priority=1, 
+        widgetName="rssFeed",
+
+        cronSyntax="0 * * * * * *",
+        priority=1,
         config=Settings.RSS,
         pane="right",
         slotNumber=0)
