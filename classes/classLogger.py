@@ -9,15 +9,15 @@ class Logger(logging.Logger):
         self.config: Dict[str, Any] = config
 
         ## formatter
-        f: logging.Formatter = logging.Formatter(self.config["format"])
+        self.f: logging.Formatter = logging.Formatter(self.config["format"])
         
         ## handlers
-        sh: logging.Handler = logging.StreamHandler()
-        fh: logging.Handler = logging.FileHandler(self.config["filename"])
+        self.sh: logging.Handler = logging.StreamHandler()
+        self.fh: logging.Handler = logging.FileHandler(self.config["filename"])
         
-        for h in [sh, fh]:
+        for h in [self.sh, self.fh]:
             h.setLevel(self.config["level"])
-            h.setFormatter(f)
+            h.setFormatter(self.f)
             self.addHandler(h)
 
         self.setLevel(self.config["level"])
