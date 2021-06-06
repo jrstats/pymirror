@@ -1,5 +1,5 @@
 from classes import Orchestrator, Settings, Window, Logger
-from classes import WidgetClock, WidgetBins, WidgetRss, WidgetWeather
+from classes import WidgetClock, WidgetBins, WidgetRss, WidgetWeather, WidgetFootball
 
 if __name__ == "__main__":
     logger = Logger(__name__, Settings.LOGGER)
@@ -13,7 +13,6 @@ if __name__ == "__main__":
         slotNumber=0)
     wr = WidgetRss(
         widgetName="rssFeed",
-
         cronSyntax="0 * * * * * *",
         priority=1,
         config=Settings.RSS,
@@ -34,7 +33,15 @@ if __name__ == "__main__":
         config=Settings.WEATHER,
         pane="right",
         slotNumber=1)
+    wf = WidgetFootball(
+        widgetName="football",
+        cronSyntax="0 * * * * * *",
+        priority=1,
+        config=Settings.FOOTBALL,
+        pane="left",
+        slotNumber=1
+    )
     window = Window()
 
-    o = Orchestrator([wc, wr, ww], window, Settings.ORCHESTRATOR)
+    o = Orchestrator([wc, wr, ww, wf], window, Settings.ORCHESTRATOR)
     o.live()

@@ -7,5 +7,6 @@ from .classWidgetBins import WidgetBins
 from .classWidgetClock import WidgetClock
 from .classWidgetRss import WidgetRss
 from .classWidgetWeather import WidgetWeather
+from .classWidgetFootball import WidgetFootball
 
 from .classWindow import Window
