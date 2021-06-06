@@ -1,5 +1,5 @@
 from classes import Orchestrator, Settings, Window, Logger
-from classes import WidgetClock, WidgetBins, WidgetRss, WidgetWeather, WidgetFootball
+from classes import WidgetClock, WidgetBins, WidgetRss, WidgetWeather, WidgetFootball, WidgetRocketLeague
 
 if __name__ == "__main__":
     logger = Logger(__name__, Settings.LOGGER)
@@ -41,7 +41,15 @@ if __name__ == "__main__":
         pane="left",
         slotNumber=1
     )
+    wrl = WidgetRocketLeague(
+        widgetName="rocketLeague",
+        cronSyntax="0 * * * * * *",
+        priority=1,
+        config=Settings.ROCKET_LEAGUE,
+        pane="right",
+        slotNumber=2
+    )
     window = Window()
 
-    o = Orchestrator([wc, wr, ww, wf], window, Settings.ORCHESTRATOR)
+    o = Orchestrator([wc, wr, ww, wf, wrl], window, Settings.ORCHESTRATOR)
     o.live()

@@ -29,6 +29,11 @@ class Settings():
         "teamsOfInterest": "BRN"
     }
 
+    ROCKET_LEAGUE = {
+        "baseUrl": "https://liquipedia.net/rocketleague/S-Tier_Tournaments",
+        "imgUrl": "https://liquipedia.net{img}"
+    }
+
     RSS = {
         "baseUrl": "https://www.reddit.com/user/m-xames/m/uk_politics/search.rss?",
         "searchTerms": {

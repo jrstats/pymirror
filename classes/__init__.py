@@ -8,5 +8,6 @@ from .classWidgetClock import WidgetClock
 from .classWidgetRss import WidgetRss
 from .classWidgetWeather import WidgetWeather
 from .classWidgetFootball import WidgetFootball
+from .classWidgetRocketLeague import WidgetRocketLeague
 
 from .classWindow import Window
