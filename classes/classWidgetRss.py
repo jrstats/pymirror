@@ -9,6 +9,7 @@ from .classSettings import Settings
 
 logger = Logger(__name__, Settings.LOGGER)
 
+
 class WidgetRss(Widget):
     def __init__(self, widgetName: str, cronSyntax: str, priority: int, pane: str, slotNumber: int, config: Dict[str, Any]) -> None:
         super().__init__(widgetName, cronSyntax, priority, pane, slotNumber, config)
@@ -27,8 +28,6 @@ class WidgetRss(Widget):
     def generateHtml(self) -> None:
         # render html with output data
         htmlList: list = [x["title"] for x in self.output][:self.config["displayNumberOfItems"]]
-        html = "<ul><li>"
-        html += "</li>\n<li>".join(htmlList)
-        html += "</li></ul>"
-        
+        html: str = self.listToHtml(htmlList)
+
         self.html: str = html

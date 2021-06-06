@@ -1,7 +1,7 @@
 import datetime
 
 from crontab import CronTab
-from typing import Dict, Union
+from typing import Dict, Union, Any, List
 from .classLogger import Logger
 from .classSettings import Settings
 
@@ -15,7 +15,7 @@ class Widget():
         :param widgetName:
         :param cronSyntax: Minute, Hour, DayOfMonth, Month, DayOfWeek
         :param priority:
-        :param config: 
+        :param config:
     """
     def __init__(self, widgetName: str, cronSyntax: str, priority: int, pane: str, slotNumber: int, config: Dict[str, Union[str, Dict]]) -> None:
         self.widgetName: str = widgetName
@@ -28,6 +28,9 @@ class Widget():
         # https://github.com/josiahcarlson/parse-crontab
         self.cron: CronTab = CronTab(self.cronSyntax)
         self.lastChecked = datetime.datetime.now()
+
+        #
+        self.output: Any = None
 
 
     def getRefreshBoolean(self) -> bool:
@@ -50,3 +53,9 @@ class Widget():
     def generateHtml(self) -> None:
         self.html: str = ""
 
+    @staticmethod
+    def listToHtml(x: List[str]) -> str:
+        html: str = "<ul><li>"
+        html += "</li>\n<li>".join(x)
+        html += "</li></ul>"
+        return html

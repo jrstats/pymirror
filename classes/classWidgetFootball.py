@@ -1,25 +1,25 @@
 import bs4
 import datetime
 import requests
-import tkinter as tk
 from typing import Dict, Any, List
 from .classWidget import Widget
 from .classLogger import Logger
 from .classSettings import Settings
 
 logger = Logger(__name__, Settings.LOGGER)
+
+
 class WidgetFootball(Widget):
     def __init__(self, widgetName: str, cronSyntax: str, priority: int, pane: str, slotNumber: int, config: Dict[str, Any]) -> None:
         super().__init__(widgetName, cronSyntax, priority, pane, slotNumber, config)
 
         # initialise class
-        self.output = None
+        self.query = self.config["baseUrl"] + "?league=" + self.config["league"]
 
 
     def update(self) -> None:
         # load football matches
-        url = self.config["baseUrl"] + "?league=" + self.config["league"]
-        r = requests.get(url)
+        r = requests.get(self.query)
         soup = bs4.BeautifulSoup(r.text, "html.parser")
 
         # parse results
@@ -40,7 +40,7 @@ class WidgetFootball(Widget):
         } for x in rows]
         matchesOfInterest = [x for x in matches if (x["homeTeam"]["abbr"] in self.config["teamsOfInterest"]) or (x["awayTeam"]["abbr"] in self.config["teamsOfInterest"])]
 
-        ## TODO: if matchdate < today, etc.
+        # TODO: if matchdate < today, etc.
 
         self.output = matchesOfInterest
         logger.info(f"updated widget {self.widgetName} at: {datetime.datetime.now()}")
@@ -49,14 +49,13 @@ class WidgetFootball(Widget):
         # render html with output data
         # TODO: improve html
         htmlList: List[str] = [f'<p>{x["homeTeam"]["name"]} vs. {x["awayTeam"]["name"]}</p>' for x in self.output]
-        html = "<ul><li>"
-        html += "</li>\n<li>".join(htmlList)
-        html += "</li></ul>"
+        html: str = self.listToHtml(htmlList)
 
         self.html: str = html
 
+
 if __name__ == "__main__":
     config = {}
-    wc = WidgetTemplate("w1", "* * * * *", 1, config)
+    wc = WidgetFootball("w1", "* * * * *", 1, config)
     wc.update()
     print(wc.render())
