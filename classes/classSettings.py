@@ -12,15 +12,10 @@ class Settings():
         "filename": "./logs/main.log"
     }
 
-    WEATHER = {
-        "apiKey": weatherKey,
-        "baseUrl": "https://api.openweathermap.org/data/2.5/onecall?",
-        "lat": "51.5149",
-        "lon": "0.3019",
-        "exclude": "minutely,hourly",
-        "units": "metric",
-        "desiredFields": ["dt", "feels_like", "weather"],
-        "imgUrl": "http://openweathermap.org/img/w/{imgCode}.png"
+    BINS = {
+        "baseUrl": "https://www.ealing.gov.uk/site/custom_scripts/waste_collection/waste_collection.aspx",
+        "postCode": postCode,
+        "binsOfInterest": ["BLUE RECYCLING WHEELIE BIN", "FOOD BOX", "BLACK RUBBISH WHEELIE BIN"]
     }
 
     CLOCK = {
@@ -28,10 +23,10 @@ class Settings():
         "timeFormat": "%H:%M:%S"
     }
 
-    BINS = {
-        "baseUrl": "https://www.ealing.gov.uk/site/custom_scripts/waste_collection/waste_collection.aspx",
-        "postCode": postCode,
-        "binsOfInterest": ["BLUE RECYCLING WHEELIE BIN", "FOOD BOX", "BLACK RUBBISH WHEELIE BIN"]
+    FOOTBALL = {
+        "baseUrl": "https://www.espn.co.uk/football/fixtures",
+        "league": "eng.2",
+        "teamsOfInterest": "BRN"
     }
 
     RSS = {
@@ -42,4 +37,15 @@ class Settings():
             "restrict_sr":1,
             "is_multi":1},
         "displayNumberOfItems": 3
+    }
+
+    WEATHER = {
+        "apiKey": weatherKey,
+        "baseUrl": "https://api.openweathermap.org/data/2.5/onecall?",
+        "lat": "51.5149",
+        "lon": "0.3019",
+        "exclude": "minutely,hourly",
+        "units": "metric",
+        "desiredFields": ["dt", "feels_like", "weather"],
+        "imgUrl": "http://openweathermap.org/img/w/{imgCode}.png"
     }
