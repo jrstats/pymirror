@@ -13,9 +13,6 @@ class WidgetWeather(Widget):
     def __init__(self, widgetName: str, cronSyntax: str, priority: int, pane: str, slotNumber: int, config: Dict[str, Any]) -> None:
         super().__init__(widgetName, cronSyntax, priority, pane, slotNumber, config)
 
-        # initialise class
-        self.output: Dict[str, Any] = {}
-
 
     def update(self) -> None:
         # set query url
@@ -35,7 +32,7 @@ class WidgetWeather(Widget):
         # parse current weather
         currentWeather: Dict[str, Any] = {k: weather["current"][k] for k in self.config["desiredFields"]}
 
-        self.output = currentWeather
+        self.output: Dict[str, Any] = currentWeather
         logger.info(f"updated widget {self.widgetName} at: {datetime.datetime.now()}")
 
 
@@ -61,5 +58,3 @@ class WidgetWeather(Widget):
 
 
         self.html: str = html
-
-

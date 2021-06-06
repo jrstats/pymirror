@@ -15,8 +15,6 @@ class WidgetBins(Widget):
     def __init__(self, widgetName: str, cronSyntax: str, priority: int, pane: str, slotNumber: int, config: Dict[str, Any]) -> None:
         super().__init__(widgetName, cronSyntax, priority, pane, slotNumber, config)
 
-        # initialise class
-        self.output: pd.DataFrame = None
 
 
     def update(self) -> None:
@@ -51,7 +49,7 @@ class WidgetBins(Widget):
             condlist=[
                 df_tall["Frequency"] == "ONCE WEEKLY",
                 df_tall["Frequency"] == "FORTNIGHTLY"
-            ], 
+            ],
             choicelist=[
                 pd.DateOffset(days=7),
                 pd.DateOffset(days=14)
@@ -63,7 +61,7 @@ class WidgetBins(Widget):
         df_tall["bin"] = df_tall["bin"].str.replace(" WHEELIE BIN", "")
         df_tall = df_tall.reset_index(drop=True)
         df_tall = df_tall[["bin", "dateNext", "daysNext", "dateAfter"]]
-        
+
         df_summary: pd.DataFrame = df_tall.groupby("bin").first().reset_index()
         df_summary = df_summary.sort_values(["dateNext", "bin"])
         df_summary = df_summary.drop(["dateNext"], axis=1)
@@ -89,5 +87,3 @@ class WidgetBins(Widget):
         #     html += """<p>&#9633;</p>"""
 
         self.html: str = html
-
-

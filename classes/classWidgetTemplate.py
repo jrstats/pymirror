@@ -6,13 +6,14 @@ from .classLogger import Logger
 from .classSettings import Settings
 
 logger = Logger(__name__, Settings.LOGGER)
+
+
 class WidgetTemplate(Widget):
     def __init__(self, widgetName: str, cronSyntax: str, priority: int, pane: str, slotNumber: int, config: Dict[str, Any]) -> None:
         super().__init__(widgetName, cronSyntax, priority, pane, slotNumber, config)
 
         # initialise class
-        self.output = None
-
+        return None
 
     def update(self) -> None:
         # update output data
@@ -25,6 +26,7 @@ class WidgetTemplate(Widget):
 
         """
         self.html: str = html
+
 
 if __name__ == "__main__":
     config = {}
