@@ -3,7 +3,9 @@ from .keys import weatherKey, postCode
 
 class Settings():
     ORCHESTRATOR = {
-        "refresh": "second" # ["second", "minute"]
+        "refresh": "second", # ["second", "minute"]
+        "fastList": ["WidgetClock"],
+        "slowList": ["WidgetBins", "WidgetFootball", "WidgetRocketLeague", "WidgetRss", "WidgetWeather"]
     }
 
     LOGGER = {
