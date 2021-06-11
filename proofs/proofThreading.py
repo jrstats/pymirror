@@ -1,15 +1,14 @@
 import time
 import threading
 
-def quickFunction(i, name):
-    time.sleep(1)
+def quickFunction(i, name, seconds):
+    time.sleep(seconds)
     print(f"{name}: {i}")
 
-def quickMany(name):
+def quickMany(name, seconds, stopEvents):
     i = 0
-    # while not stopEvent.is_set():
-    while True:
-        quickFunction(i, name)
+    while not all([s.is_set() for s in stopEvents]):
+        quickFunction(i, name, seconds)
         i += 1
 
 def slowFunction(name, seconds, stopEvent):
@@ -23,14 +22,14 @@ def main():
     slows = [
         {"function": slowFunction, "args": ["slow0", 5]},
         {"function": slowFunction, "args": ["slow1", 10]},
-        {"function": slowFunction, "args": ["slow2", 15]},
-        {"function": slowFunction, "args": ["slow3", 20]},
+        # {"function": slowFunction, "args": ["slow2", 15]},
+        # {"function": slowFunction, "args": ["slow3", 20]},
     ]
 
     quicks = [
-        {"function": quickMany, "args": ["quick0"]},
-        {"function": quickMany, "args": ["quick1"]},
-        {"function": quickMany, "args": ["quick2"]},
+        {"function": quickMany, "args": ["quick0", 0.1]},
+        {"function": quickMany, "args": ["quick1", 0.5]},
+        {"function": quickMany, "args": ["quick2", 1.0]},
     ]
 
     stopEvents = [threading.Event() for _ in slows]
@@ -41,7 +40,7 @@ def main():
 
     quickThreads = [threading.Thread(
         target=s["function"], 
-        args=s["args"]
+        args=s["args"]+[stopEvents]
     ) for _, s in enumerate(quicks)]
 
 
@@ -49,10 +48,11 @@ def main():
         th.daemon = True
         th.start()
 
-    while not all([s.is_set() for s in stopEvents]):
-        pass
+    for th in quickThreads + slowThreads:
+        th.join()
 
     print("finished")
+    time.sleep(5)
 
 if __name__ == "__main__":
     main()
