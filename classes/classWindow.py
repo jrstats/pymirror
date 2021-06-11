@@ -78,7 +78,8 @@ class Window():
 
         # widget.update()
         # widget.generateHtml()
-        widgetFrame.load_html(widget.html)
+        logger.info("loading widget")
+        widgetFrame.load_html(widget.html, widget.imageBase)
         widgetFrame.add_css(self.bodyCss)
 
     def refresh(self) -> None:

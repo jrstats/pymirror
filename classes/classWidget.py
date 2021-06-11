@@ -31,6 +31,7 @@ class Widget():
 
         #
         self.output: Any = None
+        self.imageBase: str = None
 
 
     def getRefreshBoolean(self) -> bool:

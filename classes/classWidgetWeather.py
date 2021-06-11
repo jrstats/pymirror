@@ -58,3 +58,4 @@ class WidgetWeather(Widget):
 
 
         self.html: str = html
+        self.imageBase: str = imgSource.split("/")[0]

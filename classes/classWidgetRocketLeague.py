@@ -2,6 +2,7 @@ import bs4
 import datetime
 import re
 import requests
+
 from typing import Dict, Any
 from .classWidget import Widget
 from .classLogger import Logger
@@ -70,4 +71,4 @@ if __name__ == "__main__":
         slotNumber=2
     )
     wrl.update()
-    print(wrl.render())
+    print(wrl.generateHtml())
