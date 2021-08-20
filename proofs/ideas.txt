@@ -12,7 +12,15 @@ https://pypi.org/project/tkinterweb/
 https://github.com/Andereoo/TkinterWeb/blob/main/tkinterweb/docs/GEOMETRY.md
 https://www.youtube.com/watch?v=d6UitRCstiQ
 
+## JustPy
+https://justpy.io/
+
+## PyQt
+https://doc.qt.io/qtforpython/overviews/richtext-html-subset.html
+
 ## django mirror
 https://github.com/abhijitbangera/smartmirror
 https://www.youtube.com/watch?v=UmljXZIypDc
 
+## widgets
+local post office collection opening times?
